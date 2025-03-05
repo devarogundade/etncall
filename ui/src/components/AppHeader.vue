@@ -44,8 +44,8 @@ onMounted(() => {
 
                 <nav>
                     <RouterLink to="/bridge">Bridge</RouterLink>
-                    <a href="">Devpost</a>
-                    <a href="">Github</a>
+                    <a href="https://devpost.com/software/etncall">Devpost</a>
+                    <a href="https://github.com/devarogundade/etncall">Github</a>
                 </nav>
 
                 <RouterLink to="/bridge" v-if="route.name == 'home'">
