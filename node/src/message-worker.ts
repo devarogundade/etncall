@@ -12,19 +12,17 @@ import {
   ETN_CALL_ADDRESSES,
 } from './types';
 import { InjectModel } from '@nestjs/mongoose';
-import { createWalletClient, type Hex, http } from 'viem';
+import { createPublicClient, createWalletClient, type Hex, http } from 'viem';
 import { Processor, WorkerHost, OnWorkerEvent } from '@nestjs/bullmq';
 import { mnemonicToAccount } from 'viem/accounts';
-import { writeContract } from 'viem/_types/actions/wallet/writeContract';
-import { waitForTransactionReceipt } from 'viem/_types/actions/public/waitForTransactionReceipt';
 import { etnCallABI } from './abis';
 
 const TOKEN_POOL_ADDRESSES: {
   [key: number]: Hex;
 } = {
-  5201420: '0x',
-  534351: '0x',
-  80002: '0x',
+  5201420: '0x8E659DA3e81FddbD73c1511C990391F9486CF16C',
+  534351: '0xd44bf2743f9bE03D97511235e38af1EA6e8C9ECE',
+  80002: '0x92E1d7A42108f962e12E750B22edf97D1B66BeD9',
 };
 
 @Processor('MessageWorker')
@@ -79,7 +77,12 @@ class MessageWorker extends WorkerHost {
   private async signTransaction(message: Message): Promise<Message> {
     const walletClient = createWalletClient({
       account: mnemonicToAccount(process.env.MNEMONIC!),
-      chain: getChain(message.fromChainId),
+      chain: getChain(message.toChainId),
+      transport: http(),
+    });
+
+    const publicClient = createPublicClient({
+      chain: getChain(message.toChainId),
       transport: http(),
     });
 
@@ -94,15 +97,15 @@ class MessageWorker extends WorkerHost {
 
     const tokenPool = TOKEN_POOL_ADDRESSES[message.toChainId];
 
-    const result = await writeContract(walletClient, {
+    const toTrxHash = await walletClient.writeContract({
       abi: etnCallABI,
       address: ETN_CALL_ADDRESSES[message.toChainId],
       functionName: 'postMessage',
       args: [message.receiver, incomingMessage, tokenPool],
     });
 
-    const receipt = await waitForTransactionReceipt(walletClient, {
-      hash: result,
+    const receipt = await publicClient.waitForTransactionReceipt({
+      hash: toTrxHash,
     });
 
     message.toTrxHash = receipt.transactionHash;
@@ -114,23 +117,27 @@ class MessageWorker extends WorkerHost {
   }
 
   async process(job: Job<JobOptions>): Promise<any> {
-    const messages = await this.event.fetch(job.data.chainId);
+    try {
+      const messages = await this.event.fetch(job.data.chainId);
 
-    for (let index = 0; index < messages.length; index++) {
-      const message = messages[index];
-      switch (message.status) {
-        case Status.INITIATED:
-          message.initializedTimestamp = Math.ceil(Date.now() / 1000);
-          await this.initializeTrx(message);
-          break;
+      for (let index = 0; index < messages.length; index++) {
+        const message = messages[index];
+        switch (message.status) {
+          case Status.INITIATED:
+            message.initializedTimestamp = Math.ceil(Date.now() / 1000);
+            await this.initializeTrx(message);
+            break;
 
-        case Status.RETRY:
-          message.retriedTimestamp = Math.ceil(Date.now() / 1000);
-          break;
+          case Status.RETRY:
+            message.retriedTimestamp = Math.ceil(Date.now() / 1000);
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   }
 

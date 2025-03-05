@@ -6,9 +6,9 @@ import { bridgeAbi } from "../abis/bridge";
 
 const BridgeContract = {
   address: {
-    5201420: "0x",
-    534351: "0x",
-    80002: "0x",
+    5201420: "0x6c03225b209187A318AE6FF0E4c547c979167Ebc",
+    534351: "0x98d0a92C3752949E1b359BC3D6532B679F17BC0B",
+    80002: "0x848F5e09bC24663cC0451c0c44826b1C7706Ad78",
   } as {
     [key: number]: Hex;
   },

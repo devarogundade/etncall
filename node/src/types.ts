@@ -6,17 +6,17 @@ import { polygonAmoy, scrollSepolia } from 'viem/chains';
 export const ETN_CALL_ADDRESSES: {
   [key: number]: Hex;
 } = {
-  5201420: '0x',
-  534351: '0x',
-  80002: '0x',
+  5201420: '0x8b643a9F90365D5AAEA397Cb76E99DFe9D0cf1cB',
+  534351: '0x239DDD71fcb1B8E6cEb43AE592644D637f44C089',
+  80002: '0xd44bf2743f9bE03D97511235e38af1EA6e8C9ECE',
 };
 
 export const ETN_CALL_START_BLOCKS: {
   [key: number]: bigint;
 } = {
-  5201420: BigInt(0),
-  534351: BigInt(0),
-  80002: BigInt(0),
+  5201420: BigInt(5730686),
+  534351: BigInt(8405334),
+  80002: BigInt(18845107),
 };
 
 export const electroneumTestnet = defineChain({

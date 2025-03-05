@@ -224,7 +224,8 @@ watch(form.value, () => {
                                     @click="form.froming = !form.froming"
                                     :style="{ top: form.interchange ? '-35px' : '205px' }">
                                     <div class="chain" v-for="chain, index in getChains"
-                                        @click="form.bridge.from.chain = chain" :key="index">
+                                        @click="!form.interchange ? form.bridge.from.chain = chain : form.bridge.to.chain = chain;"
+                                        :key="index">
                                         <img :src="`/images/${chain.id}.png`" alt="">
                                         <p>{{ chain.name }}</p>
                                         <SemanticGreen v-if="form.bridge.from.chain.id == chain.id" />
@@ -287,6 +288,7 @@ watch(form.value, () => {
                                     <p>{{ form.bridge.to.chain.name }}</p>
                                 </div>
                             </div>
+
 
                             <div class="from_connection" v-if="!walletStore.address">
                                 <SemanticRed />

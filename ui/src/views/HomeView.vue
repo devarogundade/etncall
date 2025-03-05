@@ -8,6 +8,9 @@ import Client from '@/scripts/client';
 import { notify } from '@/reactives/notify';
 import LoadingBox from '@/components/LoadingBox.vue';
 import SearchIcon from '@/components/icons/SearchIcon.vue';
+import FailedfulIcon from '@/components/icons/FailedfulIcon.vue';
+import SuccessfulIcon from '@/components/icons/SuccessfulIcon.vue';
+import OngoingIcon from '@/components/icons/OngoingIcon.vue';
 
 const total = ref<number>(0);
 const search = ref<string>("");
@@ -38,6 +41,7 @@ const getMessages = async () => {
 
 onMounted(() => {
     getMessages();
+    setInterval(() => getMessages(), 10_000);
 });
 </script>
 
@@ -95,70 +99,69 @@ onMounted(() => {
                             </tr>
                         </thead>
                         <tbody>
-                            <RouterLink :to="`/${message.messageId}`" v-for="message, i in messages" :key="i">
-
-                                <tr>
-                                    <td>
+                            <tr v-for="message, i in messages" :key="i">
+                                <td>
+                                    <RouterLink :to="`/${message.messageId}`">
                                         <p class="message_id">{{ fineId(message.messageId) }}</p>
-                                    </td>
-                                    <td>
-                                        <div class="message_status" v-if="message.status == Status.PROCESSING">
-                                            <OngoingIcon />
-                                            <p>Pending</p>
+                                    </RouterLink>
+                                </td>
+                                <td>
+                                    <div class="message_status" v-if="message.status == Status.INITIATED">
+                                        <OngoingIcon />
+                                        <p>Pending</p>
+                                    </div>
+                                    <div class="message_status" v-if="message.status == Status.PROCESSING">
+                                        <OngoingIcon />
+                                        <p>Processing</p>
+                                    </div>
+                                    <div class="message_status" v-if="message.status == Status.DELIVERED">
+                                        <SuccessfulIcon />
+                                        <p>Successful</p>
+                                    </div>
+                                    <div class="message_status" v-if="message.status == Status.FAILED">
+                                        <FailedfulIcon />
+                                        <p>Failed</p>
+                                    </div>
+                                    <div class="message_status" v-if="message.status == Status.RETRY">
+                                        <FailedfulIcon />
+                                        <p>Will Retry</p>
+                                    </div>
+                                    <div class="message_status" v-if="message.status == Status.RETRYING">
+                                        <OngoingIcon />
+                                        <p>Retrying</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="message_time">{{ format((message.initializedTimestamp || 0) *
+                                        1000)
+                                    }}</p>
+                                </td>
+                                <td>
+                                    <div class="message_hash">
+                                        <div class="message_hash_image">
+                                            <img :src="`/images/${message.fromChainId}.png`" alt="">
                                         </div>
-                                        <div class="message_status" v-if="message.status == Status.PROCESSING">
-                                            <OngoingIcon />
-                                            <p>Processing</p>
-                                        </div>
-                                        <div class="message_status" v-if="message.status == Status.DELIVERED">
-                                            <SuccessfulIcon />
-                                            <p>Successful</p>
-                                        </div>
-                                        <div class="message_status" v-if="message.status == Status.FAILED">
-                                            <FailedfulIcon />
-                                            <p>Failed</p>
-                                        </div>
-                                        <div class="message_status" v-if="message.status == Status.RETRY">
-                                            <FailedfulIcon />
-                                            <p>Will Retry</p>
-                                        </div>
-                                        <div class="message_status" v-if="message.status == Status.RETRYING">
-                                            <OngoingIcon />
-                                            <p>Retrying</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="message_time">{{ format((message.initializedTimestamp || 0) *
-                                            1000)
-                                            }}</p>
-                                    </td>
-                                    <td>
-                                        <div class="message_hash">
-                                            <div class="message_hash_image">
-                                                <img :src="`${message.fromChainId}.png`" alt="">
-                                            </div>
-                                            <a v-if="message.fromTrxHash"
-                                                :href="`${getChain(message.fromChainId)?.blockExplorers?.[0]}/tx/${message.fromTrxHash}`">
-                                                <p>{{ fineId(message.fromTrxHash) }}</p>
-                                            </a>
-                                            <p v-else>--------</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="message_hash">
-                                            <a v-if="message.toTrxHash"
-                                                :href="`${getChain(message.toChainId)?.blockExplorers?.[0]}/tx/${message.toTrxHash}`">
-                                                <p>{{ fineId(message.toTrxHash) }}</p>
-                                            </a>
-                                            <p v-else>--------</p>
+                                        <a v-if="message.fromTrxHash"
+                                            :href="`${getChain(message.fromChainId)?.blockExplorers?.default?.url}/tx/${message.fromTrxHash}`">
+                                            <p>{{ fineId(message.fromTrxHash) }}</p>
+                                        </a>
+                                        <p v-else>--------</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="message_hash">
+                                        <a v-if="message.toTrxHash"
+                                            :href="`${getChain(message.toChainId)?.blockExplorers?.default?.url}/tx/${message.toTrxHash}`">
+                                            <p>{{ fineId(message.toTrxHash) }}</p>
+                                        </a>
+                                        <p v-else>--------</p>
 
-                                            <div class="message_hash_image">
-                                                <img :src="`${message.toChainId}.png`" alt="">
-                                            </div>
+                                        <div class="message_hash_image">
+                                            <img :src="`/images/${message.toChainId}.png`" alt="">
                                         </div>
-                                    </td>
-                                </tr>
-                            </RouterLink>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -308,9 +311,10 @@ onMounted(() => {
     padding: 0 26px;
     margin-top: 30px;
     border-radius: 15px;
-    border: 2px solid var(--bg-darker);
+    border: 2px solid var(--bg-darkest);
     background: var(--bg-dark);
     overflow: hidden;
+    border-collapse: collapse;
 }
 
 thead tr {
@@ -348,10 +352,7 @@ thead td {
 }
 
 tbody tr {
-    display: flex;
-    align-items: center;
     height: 86px;
-    background: var(--bg-light);
     margin-bottom: 3px;
     padding: 0 26px;
 }

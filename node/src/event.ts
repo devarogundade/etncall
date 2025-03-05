@@ -1,6 +1,9 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import fs from 'fs';
+import * as fs from 'fs';
+import * as path from 'path';
 import { etnCallABI } from './abis';
 import { createPublicClient, http } from 'viem';
 import { Message } from './schemas/message';
@@ -8,6 +11,7 @@ import {
   ETN_CALL_ADDRESSES,
   ETN_CALL_START_BLOCKS,
   getChain,
+  Status,
   SUPPORTED_CHAINS,
 } from './types';
 
@@ -18,7 +22,17 @@ class Event {
       transport: http(),
     });
 
-    const data = fs.readFileSync(`block_number_${chainId}.txt`, 'utf-8');
+    if (!fs.existsSync(path.join(__dirname, `block_number_${chainId}.txt`))) {
+      fs.writeFileSync(
+        path.join(__dirname, `block_number_${chainId}.txt`),
+        ETN_CALL_START_BLOCKS[chainId].toString(),
+      );
+    }
+
+    const data = fs.readFileSync(
+      path.join(__dirname, `block_number_${chainId}.txt`),
+      'utf-8',
+    );
 
     const fromBlock: bigint = data
       ? BigInt(data)
@@ -38,27 +52,28 @@ class Event {
 
     console.log(logs);
 
-    fs.writeFileSync(`block_number_${chainId}.txt`, lastestBlock.toString());
+    fs.writeFileSync(
+      path.join(__dirname, `block_number_${chainId}.txt`),
+      lastestBlock.toString(),
+    );
 
-    return [];
-
-    // return logs.map((log: DispatchLog) => {
-    //   return {
-    //     messageId: log.messageId,
-    //     status: Status.INITIATED,
-    //     fromTrxHash: log.transactionHash,
-    //     fee: log.fee,
-    //     feeToken: log.feeToken,
-    //     sequenceNumber: log.sequenceNumber,
-    //     fromChainId: chainId,
-    //     toChainId: log.toChainId,
-    //     sender: log.sender,
-    //     receiver: log.receiver,
-    //     tokens: log.tokens,
-    //     payMaster: log.payMaster,
-    //     payload: log.payload,
-    //   };
-    // });
+    return logs.map((log: any) => {
+      return {
+        messageId: log.args.messageId,
+        status: Status.INITIATED,
+        fromTrxHash: log.transactionHash,
+        fee: log.args.fee,
+        feeToken: log.args.feeToken,
+        sequenceNumber: Number(log.args.sequenceNumber),
+        fromChainId: chainId,
+        toChainId: Number(log.args.toChainId) as SUPPORTED_CHAINS,
+        sender: log.args.sender,
+        receiver: log.args.receiver,
+        tokens: log.args.tokens,
+        payMaster: log.args.payMaster,
+        payload: log.args.payload,
+      };
+    });
   }
 }
 

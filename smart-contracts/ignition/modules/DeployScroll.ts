@@ -15,7 +15,7 @@ const DeployScrollModule = buildModule("DeployScrollModule", (m) => {
   const { etnCallPay } = m.useModule(ETNCallPayModule);
   const { etnCallConfig } = m.useModule(ETNCallConfigModule);
 
-  m.call(etnCallConfig, "setFee", [5201420, parseEther("0.0012")]);
+  m.call(etnCallConfig, "setFee", [5201420, parseEther("0.0005")]);
 
   m.call(etnCallConfig, "updateSupportedChains", [[5201420]]);
 
@@ -23,26 +23,56 @@ const DeployScrollModule = buildModule("DeployScrollModule", (m) => {
     [btc, bnb, usdt, usdc, wmatic, wetn],
   ]);
 
-  // m.call(etnCallConfig, "setChainTokenId", [5201420 , "", btc], { id: "btc" });
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [5201420, "0x93cdD8AD086B719C7F56D540B38b373010481471", btc],
+    { id: "btc" }
+  );
 
-  // m.call(etnCallConfig, "setChainTokenId", [5201420 , "", bnb], { id: "bnb" });
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [5201420, "0xF3F9b7d82650F38795200326B6DE933f4E78965f", bnb],
+    { id: "bnb" }
+  );
 
-  // m.call(etnCallConfig, "setChainTokenId", [5201420 , "", usdt], { id: "usdt" });
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [5201420, "0xb4bfa32e527D198CAaBFe21cf501Cd9906726569", usdt],
+    { id: "usdt" }
+  );
 
-  // m.call(etnCallConfig, "setChainTokenId", [5201420 , "", usdc], { id: "usdc" });
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [5201420, "0xf8Fa105d9A78580f297364B9fD6575C095cE0553", usdc],
+    { id: "usdc" }
+  );
 
-  // m.call(etnCallConfig, "setChainTokenId", [5201420 , "", wmatic], { id: "wmatic" });
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [5201420, "0x5c77247e37dBE17B2801f60bdcA956eCCA428477", wmatic],
+    {
+      id: "wmatic",
+    }
+  );
 
   m.call(
     etnCallConfig,
     "setChainTokenId",
     [5201420, "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", wetn],
-    { id: "usdc" }
+    { id: "wetn" }
   );
 
-  m.call(etnCallPay, "deposit", [bridge], { value: parseEther("0.05") });
+  m.call(etnCallPay, "deposit", [bridge], { value: parseEther("0.001") });
 
-  // m.call(bridge, "setContract", [5201420 , ""]);
+  m.call(bridge, "setContract", [
+    5201420,
+    "0x6c03225b209187A318AE6FF0E4c547c979167Ebc",
+  ]);
 
   return { btc, bnb, usdt, usdc, wetn };
 });

@@ -9,7 +9,7 @@ import { Message } from './schemas/message';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get('/messages')
   getMessages(
     @Query('page') page: number,
     @Query('take') take: number,

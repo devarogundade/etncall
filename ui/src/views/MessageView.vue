@@ -100,7 +100,7 @@ onMounted(() => {
                                 <td>Source transaction hash:</td>
                                 <td>
                                     <a v-if="message.fromTrxHash"
-                                        :href="`${getChain(message.fromChainId)?.blockExplorers?.[0]}/tx/${message.fromTrxHash}`"
+                                        :href="`${getChain(message.fromChainId)?.blockExplorers?.default?.url}/tx/${message.fromTrxHash}`"
                                         target="_blank">
                                         <div class="hash">
                                             <div class="img"><img :src="`/images/${message.fromChainId}.png`" alt="">
@@ -123,7 +123,7 @@ onMounted(() => {
                                 <td>Destination transaction hash:</td>
                                 <td>
                                     <a v-if="message.toTrxHash"
-                                        :href="`${getChain(message.toChainId)?.blockExplorers?.[0]}/tx/${message.toTrxHash}`"
+                                        :href="`${getChain(message.toChainId)?.blockExplorers?.default?.url}/tx/${message.toTrxHash}`"
                                         target="_blank">
                                         <div class="hash">
                                             <div class="img"><img :src="`/images/${message.toChainId}.png`" alt="">
@@ -145,7 +145,7 @@ onMounted(() => {
                             <tr>
                                 <td>Source user application:</td>
                                 <td>
-                                    <a :href="`${getChain(message.fromChainId)?.blockExplorers?.[0]}/address/${message.sender}`"
+                                    <a :href="`${getChain(message.fromChainId)?.blockExplorers?.default?.url}/address/${message.sender}`"
                                         target="_blank">
                                         <div class="hash">
                                             <div class="img"><img :src="`/images/${message.fromChainId}.png`" alt="">
@@ -163,7 +163,7 @@ onMounted(() => {
                             <tr>
                                 <td>Destination user application:</td>
                                 <td>
-                                    <a :href="`${getChain(message.toChainId)?.blockExplorers?.[0]}/address/${message.receiver}`"
+                                    <a :href="`${getChain(message.toChainId)?.blockExplorers?.default?.url}/address/${message.receiver}`"
                                         target="_blank">
                                         <div class="hash">
                                             <div class="img"><img :src="`/images/${message.toChainId}.png`" alt="">
@@ -187,7 +187,7 @@ onMounted(() => {
                                         <p>{{ formatEther(BigInt(token.amount)) }} <span>{{
                                             getToken(message.fromChainId,
                                                 token.tokenId)?.symbol
-                                        }}</span></p>
+                                                }}</span></p>
                                     </div>
                                 </td>
                             </tr>

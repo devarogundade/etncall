@@ -51,7 +51,7 @@ export class AppService {
       const total = await this.messageModel.countDocuments({ status });
 
       const data = await this.messageModel
-        .find({ status })
+        .find(status ? { status } : {})
         .skip((page - 1) * take)
         .limit(take);
 

@@ -38,7 +38,7 @@ module.exports = {
       },
     },
     amoy: {
-      url: "https://rpc_amoy.polygon.technology",
+      url: "https://rpc.ankr.com/polygon_amoy/9af32d7946dc60774ce7d7c522b46b635eb05a3b33beb4f3ea94468ec957a1c7",
       chainId: 80002,
       accounts: {
         mnemonic: MNEMONIC,
