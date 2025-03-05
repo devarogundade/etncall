@@ -8,13 +8,19 @@ import {
 import { erc20Abi, type Hex } from "viem";
 
 const TokenContract = {
-  async getAllowance(token: Hex, wallet: Hex, spender: Hex): Promise<bigint> {
+  async getAllowance(
+    token: Hex,
+    wallet: Hex,
+    spender: Hex,
+    chainId: number
+  ): Promise<bigint> {
     try {
       return await readContract(config, {
         abi: erc20Abi,
         address: token,
         functionName: "allowance",
         args: [wallet, spender],
+        chainId: chainId,
       });
     } catch (error) {
       return BigInt(0);
@@ -38,9 +44,13 @@ const TokenContract = {
     }
   },
 
-  async getTokenBalance(token: Hex | undefined, address: Hex): Promise<bigint> {
+  async getTokenBalance(
+    token: Hex | undefined,
+    address: Hex,
+    chainId: number
+  ): Promise<bigint> {
     try {
-      const { value } = await getBalance(config, { token, address });
+      const { value } = await getBalance(config, { token, address, chainId });
       return value;
     } catch (error) {
       return BigInt(0);

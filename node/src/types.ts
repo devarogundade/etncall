@@ -77,22 +77,6 @@ export enum Status {
   RETRYING,
 }
 
-export type DispatchLog = {
-  messageId: Hex;
-  fromTrxHash: Hex;
-  transactionHash: Hex;
-  fee: string;
-  feeToken: Hex;
-  sequenceNumber: number;
-  fromChainId: SUPPORTED_CHAINS;
-  toChainId: SUPPORTED_CHAINS;
-  sender: Hex;
-  receiver: Hex;
-  tokens: Token[];
-  payMaster: PayMaster;
-  payload: Hex;
-};
-
 export const getChain = (chainId: SUPPORTED_CHAINS): Chain => {
   switch (chainId) {
     case 5201420:

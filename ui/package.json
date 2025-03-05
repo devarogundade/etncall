@@ -16,6 +16,7 @@
     "@web3modal/wagmi": "^5.1.11",
     "axios": "^1.8.1",
     "pinia": "^3.0.1",
+    "timeago.js": "^4.0.2",
     "viem": "^2.23.6",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",

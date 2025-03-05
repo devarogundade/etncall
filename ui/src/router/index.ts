@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import BridgeView from "../views/BridgeView.vue";
+import MessageView from "@/views/MessageView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,11 @@ const router = createRouter({
       path: "/bridge",
       name: "bridge",
       component: BridgeView,
+    },
+    {
+      path: "/messages/:id",
+      name: "message",
+      component: MessageView,
     },
   ],
 });
