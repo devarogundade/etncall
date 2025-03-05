@@ -48,7 +48,10 @@ onMounted(() => {
                     <a href="">Github</a>
                 </nav>
 
-                <button v-if="route.name == 'home'">Token bridge</button>
+                <RouterLink to="/bridge" v-if="route.name == 'home'">
+                    <button>Token bridge</button>
+                </RouterLink>
+
                 <div v-else>
                     <button @click="modal.open()" v-if="!walletStore.address">Connect Wallet</button>
                     <button v-else>{{ fineId(walletStore.address) }}</button>
