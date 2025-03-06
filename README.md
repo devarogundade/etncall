@@ -1,2 +1,2 @@
 # ETNCall
-![Architecture](https://github.com/user-attachments/assets/8147ddde-e926-4e7a-b920-d3474f1ba9a4)
+![Architecture](https://github.com/user-attachments/assets/5c964136-668b-46c9-895e-3ce4a2d636a8)
