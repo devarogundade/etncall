@@ -14,7 +14,7 @@ The ETNCall is shipped with its own transaction Explorer including APIs, tools, 
 
 # Developers Guide
 
-#### Send Message
+## Send Message
 
 ```solidity
 Data.OutgoingMessage memory message = Data.OutgoingMessage({
@@ -29,7 +29,8 @@ uint256 fee = _etnCall.estimateFee(toChainId);
 
 bytes32 messageId = _etnCall.sendMessage{value: fee}(message, tokenPool);
 ```
-Receive Message
+
+## Receive Message
 
 ```solidity
 function _etnCallReceive(
