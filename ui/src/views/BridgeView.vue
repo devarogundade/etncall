@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { config } from '@/scripts/config';
 import BridgeContract from '@/scripts/contract';
 import { TokenContract } from '@/scripts/erc20';
@@ -215,6 +215,10 @@ watch(walletStore, () => {
 watch(form.value, () => {
     refreshBalance();
     refreshAllowance();
+});
+
+onMounted(() => {
+    refreshBalance();
 });
 </script>
 

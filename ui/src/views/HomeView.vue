@@ -61,7 +61,9 @@ onMounted(() => {
                     <RouterLink to="/bridge">
                         <button>Token Bridge</button>
                     </RouterLink>
-                    <button>Developers Guide</button>
+                    <a href="https://github.com/devarogundade/etncall" target="_blank">
+                        <button>Developers Guide</button>
+                    </a>
                 </div>
 
                 <img src="/images/blockchain.jpg" alt="">
@@ -138,7 +140,7 @@ onMounted(() => {
                                 <td>
                                     <p class="message_time">{{ format((message.initializedTimestamp || 0) *
                                         1000)
-                                        }}
+                                    }}
                                     </p>
                                 </td>
                                 <td>
