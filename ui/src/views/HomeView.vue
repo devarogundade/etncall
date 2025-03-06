@@ -30,7 +30,7 @@ const goSearch = () => {
         return;
     }
 
-    router.push(`/messages/${search}`);
+    router.push(`/messages/${search.value}`);
     search.value = '';
 };
 
@@ -140,7 +140,7 @@ onMounted(() => {
                                 <td>
                                     <p class="message_time">{{ format((message.initializedTimestamp || 0) *
                                         1000)
-                                    }}
+                                        }}
                                     </p>
                                 </td>
                                 <td>
