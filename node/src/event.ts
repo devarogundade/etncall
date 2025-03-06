@@ -13,6 +13,7 @@ import {
   getChain,
   Status,
   SUPPORTED_CHAINS,
+  Token,
 } from './types';
 
 class Event {
@@ -22,10 +23,12 @@ class Event {
       transport: http(),
     });
 
+    const lastestBlock = await publicClient.getBlockNumber();
+
     if (!fs.existsSync(path.join(__dirname, `block_number_${chainId}.txt`))) {
       fs.writeFileSync(
         path.join(__dirname, `block_number_${chainId}.txt`),
-        ETN_CALL_START_BLOCKS[chainId].toString(),
+        lastestBlock.toString(),
       );
     }
 
@@ -38,8 +41,6 @@ class Event {
       ? BigInt(data)
       : ETN_CALL_START_BLOCKS[chainId];
 
-    const lastestBlock = await publicClient.getBlockNumber();
-
     if (fromBlock >= lastestBlock) return [];
 
     const logs = await publicClient.getContractEvents({
@@ -49,8 +50,6 @@ class Event {
       fromBlock: fromBlock,
       toBlock: lastestBlock,
     });
-
-    console.log(logs);
 
     fs.writeFileSync(
       path.join(__dirname, `block_number_${chainId}.txt`),
@@ -69,7 +68,12 @@ class Event {
         toChainId: Number(log.args.toChainId) as SUPPORTED_CHAINS,
         sender: log.args.sender,
         receiver: log.args.receiver,
-        tokens: log.args.tokens,
+        tokens: (log.args.tokens as any[]).map((token) => {
+          return {
+            tokenId: token.tokenId,
+            amount: (token.amount as bigint).toString(),
+          } as Token;
+        }),
         payMaster: log.args.payMaster,
         payload: log.args.payload,
       };

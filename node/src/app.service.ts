@@ -14,6 +14,7 @@ import {
   Status,
   SUPPORTED_CHAINS,
 } from './types';
+import { Hex } from 'viem';
 
 const MESSAGE_FETCH_INTERVAL = 20_000;
 
@@ -42,17 +43,33 @@ export class AppService {
     });
   }
 
+  async getMessage(messageId: Hex): Promise<AppResponse<Message | null>> {
+    try {
+      const data = await this.messageModel.findOne({ messageId });
+
+      return { status: 200, data };
+    } catch (error) {
+      console.log(error);
+      return {
+        status: 400,
+      };
+    }
+  }
+
   async getMessages(
     page: number,
     take: number,
     status?: Status,
   ): Promise<AppResponse<Paged<Message[]>>> {
     try {
-      const total = await this.messageModel.countDocuments({ status });
+      const total = await this.messageModel.countDocuments(
+        status ? { status } : {},
+      );
 
       const data = await this.messageModel
         .find(status ? { status } : {})
         .skip((page - 1) * take)
+        .sort({ initializedTimestamp: 'desc' })
         .limit(take);
 
       const lastPage = Math.ceil(total / take);

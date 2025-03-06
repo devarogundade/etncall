@@ -10,11 +10,8 @@
 
 <style scoped>
 .progress {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20;
+    display: flex;
+    justify-content: center;
 }
 
 .lds-facebook {

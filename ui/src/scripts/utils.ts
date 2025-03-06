@@ -74,39 +74,39 @@ const getTokens: Token[] = [
     },
     price: 1.012,
   },
-  {
-    name: "Ethereum",
-    symbol: "ETH",
-    image: "/images/eth.png",
-    address: {
-      5201420: "0x4764B6bA270778A54C0E968F74364b9Cf888A223",
-      534351: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-      80002: "0xAB3c1d302dAcDFFBE420aAC9fb0D4C2ED5b7B905",
-    },
-    price: 2_234.4,
-  },
-  {
-    name: "Polygon",
-    symbol: "MATIC",
-    image: "/images/matic.png",
-    address: {
-      5201420: "0x5c77247e37dBE17B2801f60bdcA956eCCA428477",
-      534351: "0x5c77247e37dBE17B2801f60bdcA956eCCA428477",
-      80002: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-    },
-    price: 0.2572,
-  },
-  {
-    name: "ETN",
-    symbol: "ETN",
-    image: "/images/etn.png",
-    address: {
-      5201420: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-      534351: "0xccC1cbFD3978ed0EaFAaE5BfCBCcBF44bE011484",
-      80002: "0xCC571702197B98c4EB8a576FFa77c84E9202baDA",
-    },
-    price: 0.002339,
-  },
+  // {
+  //   name: "Ethereum",
+  //   symbol: "ETH",
+  //   image: "/images/eth.png",
+  //   address: {
+  //     5201420: "0x4764B6bA270778A54C0E968F74364b9Cf888A223",
+  //     534351: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+  //     80002: "0xAB3c1d302dAcDFFBE420aAC9fb0D4C2ED5b7B905",
+  //   },
+  //   price: 2_234.4,
+  // },
+  // {
+  //   name: "Polygon",
+  //   symbol: "MATIC",
+  //   image: "/images/matic.png",
+  //   address: {
+  //     5201420: "0x5c77247e37dBE17B2801f60bdcA956eCCA428477",
+  //     534351: "0x5c77247e37dBE17B2801f60bdcA956eCCA428477",
+  //     80002: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+  //   },
+  //   price: 0.2572,
+  // },
+  // {
+  //   name: "ETN",
+  //   symbol: "ETN",
+  //   image: "/images/etn.png",
+  //   address: {
+  //     5201420: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+  //     534351: "0xccC1cbFD3978ed0EaFAaE5BfCBCcBF44bE011484",
+  //     80002: "0xCC571702197B98c4EB8a576FFa77c84E9202baDA",
+  //   },
+  //   price: 0.002339,
+  // },
 ];
 
 const getToken = (

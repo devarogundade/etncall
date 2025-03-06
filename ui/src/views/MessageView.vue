@@ -22,6 +22,7 @@ const messageId = ref<Hex | undefined>(route.params.id as Hex | undefined);
 
 const getMessage = async () => {
     if (!messageId.value) return;
+
     loading.value = true;
     const data = await Client.getMessage(messageId.value);
     message.value = data?.data || null;
@@ -34,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <section id="section">
+    <section>
         <div class="app_width">
             <div class="title">
                 <h3>Message Details</h3>
@@ -103,7 +104,8 @@ onMounted(() => {
                                         :href="`${getChain(message.fromChainId)?.blockExplorers?.default?.url}/tx/${message.fromTrxHash}`"
                                         target="_blank">
                                         <div class="hash">
-                                            <div class="img"><img :src="`/images/${message.fromChainId}.png`" alt="">
+                                            <div class="img">
+                                                <img :src="`/images/${message.fromChainId}.png`" alt="">
                                             </div>
                                             <p>{{ message.fromTrxHash }}</p>
                                             <OutIcon />
@@ -126,10 +128,11 @@ onMounted(() => {
                                         :href="`${getChain(message.toChainId)?.blockExplorers?.default?.url}/tx/${message.toTrxHash}`"
                                         target="_blank">
                                         <div class="hash">
-                                            <div class="img"><img :src="`/images/${message.toChainId}.png`" alt="">
-                                                <p>{{ message.toTrxHash }}</p>
-                                                <OutIcon />
+                                            <div class="img">
+                                                <img :src="`/images/${message.toChainId}.png`" alt="">
                                             </div>
+                                            <p>{{ message.toTrxHash }}</p>
+                                            <OutIcon />
                                         </div>
                                     </a>
                                     <div class="hash" v-else>
@@ -143,7 +146,7 @@ onMounted(() => {
                     <div class="tbody">
                         <tbody>
                             <tr>
-                                <td>Source user application:</td>
+                                <td>Source application:</td>
                                 <td>
                                     <a :href="`${getChain(message.fromChainId)?.blockExplorers?.default?.url}/address/${message.sender}`"
                                         target="_blank">
@@ -161,7 +164,7 @@ onMounted(() => {
                     <div class="tbody">
                         <tbody>
                             <tr>
-                                <td>Destination user application:</td>
+                                <td>Destination application:</td>
                                 <td>
                                     <a :href="`${getChain(message.toChainId)?.blockExplorers?.default?.url}/address/${message.receiver}`"
                                         target="_blank">
@@ -187,7 +190,7 @@ onMounted(() => {
                                         <p>{{ formatEther(BigInt(token.amount)) }} <span>{{
                                             getToken(message.fromChainId,
                                                 token.tokenId)?.symbol
-                                                }}</span></p>
+                                        }}</span></p>
                                     </div>
                                 </td>
                             </tr>
@@ -203,7 +206,7 @@ onMounted(() => {
                                         </div>
 
                                         <p>{{ formatEther(BigInt(message.fee)) }} <span>{{
-                                            getChain(message.fromChainId)?.nativeCurrency }}</span></p>
+                                            getChain(message.fromChainId)?.nativeCurrency.symbol }}</span></p>
                                     </div>
                                 </td>
                             </tr>
@@ -226,6 +229,10 @@ onMounted(() => {
                                 <td class="time">{{ format((message.initializedTimestamp || 0) * 1000) }},
                                     {{
                                         Intl.DateTimeFormat('en-US', {
+                                            minute: '2-digit',
+                                            second: '2-digit',
+                                            hour: '2-digit',
+                                            hour12: false,
                                             day: '2-digit',
                                             month: 'short'
                                         }).format((message.initializedTimestamp || 0) * 1000)
@@ -241,6 +248,10 @@ onMounted(() => {
                                 <td class="time">{{ format((message.deliveredTimestamp || 0) * 1000) }},
                                     {{
                                         Intl.DateTimeFormat('en-US', {
+                                            minute: '2-digit',
+                                            second: '2-digit',
+                                            hour: '2-digit',
+                                            hour12: false,
                                             day: '2-digit',
                                             month: 'short'
                                         }).format((message.deliveredTimestamp || 0) * 1000)
@@ -284,8 +295,8 @@ onMounted(() => {
 
 
 <style scoped>
-#section {
-    margin-top: 150px;
+section {
+    margin-top: 60px;
     padding-bottom: 60px;
 }
 
@@ -438,7 +449,7 @@ td:first-child {
 .payload {
     border-radius: 4px;
     border: 1px solid var(--bg-darkest);
-    background: var(--bg-light, #0D1112);
+    background: var(--bg-dark);
     padding: 16px 150px 16px 20px;
     margin: 28px 0;
     width: 900px;

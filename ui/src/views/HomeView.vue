@@ -3,7 +3,7 @@ import { Status, type Message } from '@/scripts/types';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { format } from "timeago.js";
-import { fineId, getChain } from '@/scripts/utils';
+import { fineId, getChain, getToken, toMoney } from '@/scripts/utils';
 import Client from '@/scripts/client';
 import { notify } from '@/reactives/notify';
 import LoadingBox from '@/components/LoadingBox.vue';
@@ -11,6 +11,7 @@ import SearchIcon from '@/components/icons/SearchIcon.vue';
 import FailedfulIcon from '@/components/icons/FailedfulIcon.vue';
 import SuccessfulIcon from '@/components/icons/SuccessfulIcon.vue';
 import OngoingIcon from '@/components/icons/OngoingIcon.vue';
+import { formatEther } from 'viem';
 
 const total = ref<number>(0);
 const search = ref<string>("");
@@ -37,11 +38,13 @@ const getMessages = async () => {
     const data = await Client.getMessages(1, 10);
     messages.value = data?.data?.data || [];
     total.value = data?.data?.total || 0;
+    loading.value = false;
 };
 
 onMounted(() => {
+    loading.value = true;
     getMessages();
-    setInterval(() => getMessages(), 10_000);
+    setInterval(() => getMessages(), 2_000);
 });
 </script>
 
@@ -94,6 +97,7 @@ onMounted(() => {
                                 <td>Msg Id</td>
                                 <td>Status</td>
                                 <td>Created</td>
+                                <td>Tokens</td>
                                 <td>Source Txn Hash</td>
                                 <td>Destination Txn Hash</td>
                             </tr>
@@ -101,7 +105,7 @@ onMounted(() => {
                         <tbody>
                             <tr v-for="message, i in messages" :key="i">
                                 <td>
-                                    <RouterLink :to="`/${message.messageId}`">
+                                    <RouterLink :to="`/messages/${message.messageId}`">
                                         <p class="message_id">{{ fineId(message.messageId) }}</p>
                                     </RouterLink>
                                 </td>
@@ -134,24 +138,43 @@ onMounted(() => {
                                 <td>
                                     <p class="message_time">{{ format((message.initializedTimestamp || 0) *
                                         1000)
-                                    }}</p>
+                                        }}
+                                    </p>
                                 </td>
+                                <td>
+                                    <div class="message_hash">
+                                        <p>
+                                            {{
+                                                toMoney(Number(formatEther(message.tokens[0].amount)))
+                                            }}
+                                            <span>
+                                                {{
+                                                    getToken(message.fromChainId, message.tokens[0]?.tokenId)?.symbol
+                                                }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </td>
+
                                 <td>
                                     <div class="message_hash">
                                         <div class="message_hash_image">
                                             <img :src="`/images/${message.fromChainId}.png`" alt="">
                                         </div>
                                         <a v-if="message.fromTrxHash"
-                                            :href="`${getChain(message.fromChainId)?.blockExplorers?.default?.url}/tx/${message.fromTrxHash}`">
+                                            :href="`${getChain(message.fromChainId)?.blockExplorers?.default?.url}/tx/${message.fromTrxHash}`"
+                                            target="_blank">
                                             <p>{{ fineId(message.fromTrxHash) }}</p>
                                         </a>
                                         <p v-else>--------</p>
                                     </div>
                                 </td>
+
                                 <td>
                                     <div class="message_hash">
                                         <a v-if="message.toTrxHash"
-                                            :href="`${getChain(message.toChainId)?.blockExplorers?.default?.url}/tx/${message.toTrxHash}`">
+                                            :href="`${getChain(message.toChainId)?.blockExplorers?.default?.url}/tx/${message.toTrxHash}`"
+                                            target="_blank">
                                             <p>{{ fineId(message.toTrxHash) }}</p>
                                         </a>
                                         <p v-else>--------</p>
@@ -330,7 +353,7 @@ td:nth-child(2) {
 }
 
 td:nth-child(3) {
-    width: 178px;
+    width: 200px;
 }
 
 td:nth-child(4) {
@@ -338,6 +361,10 @@ td:nth-child(4) {
 }
 
 td:nth-child(5) {
+    width: 300px;
+}
+
+td:nth-child(6) {
     width: 300px;
     text-align: right;
 }
@@ -414,7 +441,7 @@ tbody tr {
     font-size: 14px;
 }
 
-td:nth-child(5) .message_hash {
+td:nth-child(6) .message_hash {
     justify-content: flex-end;
 }
 </style>

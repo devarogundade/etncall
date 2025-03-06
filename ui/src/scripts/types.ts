@@ -18,7 +18,7 @@ export enum PayMaster {
 
 export type Token = {
   tokenId: Hex;
-  amount: string;
+  amount: bigint;
 };
 
 export type Message = {

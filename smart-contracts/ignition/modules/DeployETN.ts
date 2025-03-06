@@ -149,6 +149,19 @@ const DeployETNModule = buildModule("DeployETNModule", (m) => {
     { id: "scroll_setContract" }
   );
 
+  m.call(etnCallPay, "deposit", [bridge], {
+    value: parseEther("5"),
+    id: "topup_1",
+  });
+
+  m.call(etnCallConfig, "setFee", [80002, parseEther("0.067")], {
+    id: "fee_amoy_adjusted",
+  });
+
+  m.call(etnCallConfig, "setFee", [534351, parseEther("0.05")], {
+    id: "fee_scroll_adjusted",
+  });
+
   return { btc, bnb, usdt, usdc, weth, wmatic };
 });
 

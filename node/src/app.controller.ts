@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 
-import { Controller, Get, Query } from '@nestjs/common';
+import { Hex } from 'viem';
 import { AppService } from './app.service';
-import { AppResponse, Paged, Status } from './types';
 import { Message } from './schemas/message';
+import { AppResponse, Paged, Status } from './types';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 
 @Controller()
 export class AppController {
@@ -16,5 +17,12 @@ export class AppController {
     @Query('status') status?: Status,
   ): Promise<AppResponse<Paged<Message[]>>> {
     return this.appService.getMessages(page, take, status);
+  }
+
+  @Get('/messages/:messageId')
+  getMessage(
+    @Param('messageId') messageId: Hex,
+  ): Promise<AppResponse<Message | null>> {
+    return this.appService.getMessage(messageId);
   }
 }
