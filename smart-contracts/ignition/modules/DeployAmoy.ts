@@ -66,13 +66,22 @@ const DeployScrollModule = buildModule("DeployScrollModule", (m) => {
   );
 
   m.call(etnCallPay, "deposit", [bridge], {
-    value: parseEther("0.2"),
+    value: parseEther("2"),
   });
 
   m.call(bridge, "setContract", [
     5201420,
     "0x6c03225b209187A318AE6FF0E4c547c979167Ebc",
   ]);
+
+  m.call(etnCallConfig, "setFee", [5201420, parseEther("0.001")], {
+    id: "fee_adjusted",
+  });
+
+  m.call(etnCallPay, "deposit", [bridge], {
+    value: parseEther("0.1"),
+    id: "topup",
+  });
 
   return { btc, bnb, usdt, usdc, wetn };
 });
