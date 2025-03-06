@@ -42,7 +42,7 @@ function _etnCallReceive(
 }
 ```
 
-## Address
+## Contracts
 
 #### Chain Id 5201420 | Electroneum Testnet
 
