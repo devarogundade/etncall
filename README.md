@@ -27,3 +27,13 @@ uint256 fee = _etnCall.estimateFee(toChainId);
 
 bytes32 messageId = _etnCall.sendMessage{value: fee}(message, tokenPool);
 ```
+
+```solidity
+function _etnCallReceive(
+  Data.IncomingMessage memory message
+) internal override {
+  address data = abi.decode(message.payload, (address));
+
+  
+}
+```
