@@ -102,6 +102,15 @@ const refreshBalance = async () => {
 };
 
 const approve = async () => {
+    if (!walletStore.address) {
+        notify.push({
+            title: 'Warning',
+            description: 'Connect your wallet!',
+            category: 'error'
+        });
+        return;
+    }
+
     if (approving.value) return;
     approving.value = true;
 
@@ -129,6 +138,15 @@ const approve = async () => {
 
 const bridge = async () => {
     if (bridging.value) return;
+
+    if (!walletStore.address) {
+        notify.push({
+            title: 'Warning',
+            description: 'Connect your wallet!',
+            category: 'error'
+        });
+        return;
+    }
 
     if (form.value.bridge.amount == 0) {
         notify.push({

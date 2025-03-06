@@ -23,6 +23,12 @@ const getChain = (chainId: number): Chain | undefined => {
   return chains.find((chain) => chain.id == chainId);
 };
 
+const getFaucets: { [key: number]: string } = {
+  5201420: "https://faucet.electroneum.com",
+  534351: "https://cloud.google.com/application/web3/faucet/ethereum/sepolia",
+  80002: "https://faucet.polygon.technology/",
+};
+
 const getTokenPools: { [key: number]: Hex } = {
   5201420: "0x8E659DA3e81FddbD73c1511C990391F9486CF16C",
   534351: "0xd44bf2743f9bE03D97511235e38af1EA6e8C9ECE",
@@ -137,4 +143,5 @@ export {
   fineId,
   toMoney,
   NATIVE_TOKEN,
+  getFaucets,
 };

@@ -7,6 +7,7 @@ import { useWeb3Modal } from '@web3modal/wagmi/vue';
 import { config, chains } from '@/scripts/config';
 import { watchAccount } from '@wagmi/core';
 import { onMounted } from 'vue';
+import OutIcon from './icons/OutIcon.vue';
 
 const route = useRoute();
 const walletStore = useWalletStore();
@@ -44,8 +45,13 @@ onMounted(() => {
 
                 <nav>
                     <RouterLink to="/bridge">Bridge</RouterLink>
-                    <a href="https://devpost.com/software/etncall" target="_blank">Devpost</a>
-                    <a href="https://github.com/devarogundade/etncall" target="_blank">Github</a>
+                    <a href="https://devpost.com/software/etncall" target="_blank">Devpost
+                        <OutIcon />
+                    </a>
+                    <a href="https://github.com/devarogundade/etncall" target="_blank">Github
+                        <OutIcon />
+                    </a>
+                    <RouterLink to="/faucet">Faucet</RouterLink>
                 </nav>
 
                 <RouterLink to="/bridge" v-if="route.name == 'home'">
@@ -68,6 +74,10 @@ section {
     z-index: 10;
     background: var(--bg);
     border-bottom: 1px solid var(--bg-darkest);
+}
+
+header>a {
+    width: 200px;
 }
 
 header p {
