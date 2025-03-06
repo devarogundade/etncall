@@ -47,7 +47,7 @@ onMounted(() => {
 
             <LoadingBox v-if="loading" />
 
-            <div class="message" v-else-if="message != null">
+            <div class="message" v-else-if="message">
                 <table>
                     <div class="tbody">
                         <tbody>
@@ -190,7 +190,7 @@ onMounted(() => {
                                         <p>{{ formatEther(BigInt(token.amount)) }} <span>{{
                                             getToken(message.fromChainId,
                                                 token.tokenId)?.symbol
-                                        }}</span></p>
+                                                }}</span></p>
                                     </div>
                                 </td>
                             </tr>
