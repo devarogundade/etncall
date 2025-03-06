@@ -13,3 +13,17 @@ The ETNCall is shipped with its own transaction Explorer including APIs, tools, 
 ![Architecture](https://github.com/user-attachments/assets/5c964136-668b-46c9-895e-3ce4a2d636a8)
 
 # Developers Guide
+
+```solidity
+Data.OutgoingMessage memory message = Data.OutgoingMessage({
+            toChainId: toChainId,
+            receiver: _contracts[toChainId],
+            payload: abi.encode(_msgSender()),
+            tokens: tokens,
+            payMaster: Data.PayMaster.SENDER
+});
+
+uint256 fee = _etnCall.estimateFee(toChainId);
+
+bytes32 messageId = _etnCall.sendMessage{value: fee}(message, tokenPool);
+```
