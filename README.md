@@ -92,5 +92,11 @@ function _etnCallReceive(
 }
 ```
 
+## APIs
 
+#### Get Messages
+`https://etncall-f4e8hbe7c2dfhgcc.canadacentral-01.azurewebsites.net/messages?page=1&take=10`
+
+#### Get Message
+`https://etncall-f4e8hbe7c2dfhgcc.canadacentral-01.azurewebsites.net/messages/:messsageId`
 
