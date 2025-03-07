@@ -44,7 +44,21 @@ function _etnCallReceive(
 
 ## Contracts
 
-#### Chain Id 5201420 | Electroneum Testnet
+#### Chain Id 52014 | Electroneum Mainnet (In progress)
+```json
+{
+  "ETNCallConfigModule#ETNCallConfig": "0x48A60Bb5b671f91aa4ea8a523a68917a80b3FA06",
+  "ETNCallPayModule#ETNCallPay": "0xF42A8457851E209d95f876937f8f043b14dA23c1",
+  "TokensModule#bnb": "0xF3F9b7d82650F38795200326B6DE933f4E78965f",
+  "TokensModule#btc": "0x93cdD8AD086B719C7F56D540B38b373010481471",
+  "TokensModule#usdc": "0xf8Fa105d9A78580f297364B9fD6575C095cE0553",
+  "TokensModule#usdt": "0xb4bfa32e527D198CAaBFe21cf501Cd9906726569",
+  "ETNCallModule#ETNCall": "0x6319a4aa37cBdeB936F766232911d4076D0aaAfD",
+  "BridgeModule#Bridge": "0x92E1d7A42108f962e12E750B22edf97D1B66BeD9"
+}
+```
+
+#### Chain Id 5201420 | Electroneum Testnet (Active)
 
 ```json
 {
@@ -60,7 +74,7 @@ function _etnCallReceive(
 }
 ```
 
-#### Chain Id 534351 | Scroll Sepolia
+#### Chain Id 534351 | Scroll Sepolia (Active)
 
 ```json
 {
@@ -76,7 +90,7 @@ function _etnCallReceive(
 }
 ```
 
-#### Chain Id 80001 | Polygon Amoy
+#### Chain Id 80001 | Polygon Amoy (Active)
 
 ```json
 {
