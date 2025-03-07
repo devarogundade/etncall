@@ -17,7 +17,7 @@ const DeployScrollModule = buildModule("DeployScrollModule", (m) => {
 
   m.call(etnCallConfig, "setFee", [5201420, parseEther("0.0005")]);
 
-  m.call(etnCallConfig, "updateSupportedChains", [[5201420]]);
+  // m.call(etnCallConfig, "updateSupportedChains", [[5201420]]);
 
   m.call(etnCallConfig, "updateSupportedTokens", [
     [btc, bnb, usdt, usdc, wmatic, wetn],
@@ -74,8 +74,75 @@ const DeployScrollModule = buildModule("DeployScrollModule", (m) => {
     "0x6c03225b209187A318AE6FF0E4c547c979167Ebc",
   ]);
 
+  m.call(etnCallConfig, "updateSupportedChains", [[5201420, 80002]], {
+    id: "updated_chains",
+  });
+
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [80002, "0xccC1cbFD3978ed0EaFAaE5BfCBCcBF44bE011484", btc],
+    {
+      id: "btc_amoy",
+    }
+  );
+
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [80002, "0x4764B6bA270778A54C0E968F74364b9Cf888A223", bnb],
+    {
+      id: "bnb_amoy",
+    }
+  );
+
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [80002, "0x64b7D2f159bC90Eae3e46c8b0331eFD66ff2b2BA", usdt],
+    {
+      id: "usdt_amoy",
+    }
+  );
+
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [80002, "0x5c77247e37dBE17B2801f60bdcA956eCCA428477", usdc],
+    {
+      id: "usdc_amoy",
+    }
+  );
+
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [80002, "0xCDF66fB8Ffe346693fF738Ac655bBB3Ae0F4AC10", wmatic],
+    {
+      id: "weth_amoy",
+    }
+  );
+
+  m.call(
+    etnCallConfig,
+    "setChainTokenId",
+    [80002, "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", wmatic],
+    { id: "wmatic_amoy" }
+  );
+
+  m.call(
+    bridge,
+    "setContract",
+    [80002, "0x848F5e09bC24663cC0451c0c44826b1C7706Ad78"],
+    { id: "amoy_setContract" }
+  );
+
   m.call(etnCallConfig, "setFee", [5201420, parseEther("0.00005")], {
     id: "fee_adjusted",
+  });
+
+  m.call(etnCallConfig, "setFee", [80002, parseEther("0.000056")], {
+    id: "fee_amoy_adjusted",
   });
 
   m.call(etnCallPay, "deposit", [bridge], {

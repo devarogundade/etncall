@@ -20,6 +20,7 @@ const walletStore = useWalletStore();
 
 const form = ref({
     froming: false,
+    toing: false,
     coining: false,
     interchange: false,
     bridging: false,
@@ -244,10 +245,10 @@ onMounted(() => {
 
                                 <div class="inactive_from_chains" v-show="form.froming"
                                     @click="form.froming = !form.froming"
-                                    :style="{ top: form.interchange ? '-35px' : '205px' }">
-                                    <div class="chain" v-for="chain, index in getChains"
-                                        @click="!form.interchange ? form.bridge.from.chain = chain : form.bridge.to.chain = chain;"
-                                        :key="index">
+                                    :style="{ top: form.interchange ? '-5px' : '245px' }">
+                                    <div class="chain"
+                                        v-for="chain, index in getChains.filter(c => c.id != form.bridge.to.chain.id)"
+                                        @click=" form.bridge.from.chain = chain" :key="index">
                                         <img :src="`/images/${chain.id}.png`" alt="">
                                         <p>{{ chain.name }}</p>
                                         <SemanticGreen v-if="form.bridge.from.chain.id == chain.id" />
@@ -305,9 +306,22 @@ onMounted(() => {
                         <div class="to_toolbar">
                             <p class="from_label0">{{ !form.interchange ? 'To' : 'From' }}</p>
                             <div class="to_chain">
-                                <div class="active_to_chain">
+                                <div class="active_to_chain" @click="form.toing = !form.toing">
                                     <img :src="`/images/${form.bridge.to.chain.id}.png`" alt="">
                                     <p>{{ form.bridge.to.chain.name }}</p>
+                                    <ArrowDownIcon />
+                                </div>
+
+                                <div class="inactive_from_chains" v-show="form.toing" @click="form.toing = !form.toing"
+                                    :style="{ top: !form.interchange ? '535px' : '-5px' }">
+                                    <div class="chain"
+                                        v-for="chain, index in getChains.filter(c => c.id != form.bridge.from.chain.id)"
+                                        @click=" form.bridge.to.chain = chain" :key="index">
+                                        <img :src="`/images/${chain.id}.png`" alt="">
+                                        <p>{{ chain.name }}</p>
+                                        <SemanticGreen v-if="form.bridge.from.chain.id == chain.id" />
+                                        <SemanticGreen v-else-if="form.bridge.to.chain.id == chain.id" />
+                                    </div>
                                 </div>
                             </div>
 
@@ -482,8 +496,8 @@ onMounted(() => {
 .active_from_chain p,
 .active_to_chain p {
     color: var(--tx-normal);
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .inactive_from_chains {
@@ -505,12 +519,13 @@ onMounted(() => {
     display: flex;
     align-items: center;
     gap: 6px;
+    cursor: pointer;
 }
 
 .inactive_from_chains p {
     color: var(--tx-normal);
-    font-size: 16px;
-    font-weight: 800;
+    font-size: 14px;
+    font-weight: 500;
     width: 120px;
 }
 

@@ -45,4 +45,19 @@ module.exports = {
       },
     },
   },
+  etherscan: {
+    apiKey: {
+      electroneumTestnet: "empty",
+    },
+    customChains: [
+      {
+        network: "electroneumTestnet",
+        chainId: 5201420,
+        urls: {
+          apiURL: "https://testnet-blockexplorer.electroneum.com/api",
+          browserURL: "https://testnet-blockexplorer.electroneum.com",
+        },
+      },
+    ],
+  },
 };
