@@ -23,6 +23,13 @@ module.exports = {
         "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
       ],
     },
+    electroneumMainnet: {
+      url: "https://rpc.ankr.com/electroneum/9af32d7946dc60774ce7d7c522b46b635eb05a3b33beb4f3ea94468ec957a1c7",
+      chainId: 52014,
+      accounts: {
+        mnemonic: MNEMONIC,
+      },
+    },
     electroneumTestnet: {
       url: "https://rpc.ankr.com/electroneum_testnet/9af32d7946dc60774ce7d7c522b46b635eb05a3b33beb4f3ea94468ec957a1c7",
       chainId: 5201420,
@@ -48,8 +55,17 @@ module.exports = {
   etherscan: {
     apiKey: {
       electroneumTestnet: "empty",
+      electroneumMainnet: "empty",
     },
     customChains: [
+      {
+        network: "electroneumMainnet",
+        chainId: 52014,
+        urls: {
+          apiURL: "https://blockexplorer.electroneum.com/api",
+          browserURL: "https://blockexplorer.electroneum.com",
+        },
+      },
       {
         network: "electroneumTestnet",
         chainId: 5201420,
