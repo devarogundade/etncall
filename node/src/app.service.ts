@@ -16,7 +16,7 @@ import {
 } from './types';
 import { Hex } from 'viem';
 
-const MESSAGE_FETCH_INTERVAL = 20_000;
+const MESSAGE_FETCH_INTERVAL = 60_000;
 
 @Injectable()
 export class AppService {

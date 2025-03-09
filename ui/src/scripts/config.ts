@@ -1,7 +1,7 @@
 import { walletConnect } from "@wagmi/connectors";
 import { defaultWagmiConfig } from "@web3modal/wagmi";
 import { defineChain } from "viem";
-import { polygonAmoy, scrollSepolia } from 'viem/chains';
+import { polygonAmoy, scrollSepolia } from "viem/chains";
 
 const metadata = {
   name: "ETNCall",
@@ -12,23 +12,23 @@ const metadata = {
 
 export const electroneumTestnet = defineChain({
   id: 5201420,
-  name: 'Electroneum Testnet',
+  name: "Electroneum Testnet",
   nativeCurrency: {
-    name: 'ETN',
-    symbol: 'ETN',
+    name: "ETN",
+    symbol: "ETN",
     decimals: 18,
   },
   rpcUrls: {
     default: {
       http: [
-        'https://rpc.ankr.com/electroneum_testnet/9af32d7946dc60774ce7d7c522b46b635eb05a3b33beb4f3ea94468ec957a1c7',
+        "https://rpc.ankr.com/electroneum_testnet/1676bc037edd5ef8284e1077d4c6f0f2c6924bb424e92ce921b5e1c9cc1c1631",
       ],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Electroneum Block Explorer',
-      url: 'https://blockexplorer.thesecurityteam.rocks',
+      name: "Electroneum Block Explorer",
+      url: "https://blockexplorer.thesecurityteam.rocks",
     },
   },
   testnet: true,
